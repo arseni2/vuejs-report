@@ -33,60 +33,20 @@
         <thead class="text-gray-500 border-b-borderGray border-b-[1px]">
         <tr>
           <th scope="col" class="px-6 py-3 text-sm font-medium text-thTextGray">
-            Название шаблона отчёта
+            Название
           </th>
           <th scope="col" class="px-6 py-3 text-sm font-medium text-thTextGray">
-            Color
-          </th>
-          <th scope="col" class="px-6 py-3 text-sm font-medium text-thTextGray">
-            Category
-          </th>
-          <th scope="col" class="px-6 py-3 text-sm font-medium text-thTextGray">
-            Price
+            Выбранные колонки
           </th>
         </tr>
         </thead>
         <tbody class="divide-y-[1px] divide-gray">
-        <tr class="bg-white">
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-            Apple MacBook Pro 17"
-          </th>
+        <tr v-for="item in allTemplateReports" class="bg-white">
           <td class="px-6 py-4">
-            Silver
+            {{ item.title }}
           </td>
           <td class="px-6 py-4">
-            Laptop
-          </td>
-          <td class="px-6 py-4">
-            $2999
-          </td>
-        </tr>
-        <tr class="bg-white">
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-            Microsoft Surface Pro
-          </th>
-          <td class="px-6 py-4">
-            White
-          </td>
-          <td class="px-6 py-4">
-            Laptop PC
-          </td>
-          <td class="px-6 py-4">
-            $1999
-          </td>
-        </tr>
-        <tr class="bg-white">
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-            Magic Mouse 2
-          </th>
-          <td class="px-6 py-4">
-            Black
-          </td>
-          <td class="px-6 py-4">
-            Accessories
-          </td>
-          <td class="px-6 py-4">
-            $99
+            {{ item.selectedItems }}
           </td>
         </tr>
         </tbody>
@@ -100,6 +60,7 @@ import PageLayout from "@/layouts/PageLayout.vue";
 import ButtonFilled from "@/shared_components/ButtonFilled.vue";
 import CreateTemplateSchedulerForm from "@/forms/CreateTemplateForm.vue";
 import Dialog from "@/shared_components/Dialog.vue";
+import {mapGetters} from "vuex";
 
 export default {
   name: "TemplateReports",
@@ -109,6 +70,7 @@ export default {
       isOpenDialog: false
     }
   },
+  computed: mapGetters(["allTemplateReports"]),
   methods: {
     handleOpen() {
       this.isOpenDialog = true

@@ -47,6 +47,7 @@ import Input from "@/shared_components/Input.vue";
 import Select from "@/shared_components/Select.vue";
 import VueDatePicker from '@vuepic/vue-datepicker';
 import ErrorText from "@/shared_components/ErrorText.vue";
+import {mapActions} from "vuex";
 
 export default {
   setup() {
@@ -71,9 +72,9 @@ export default {
     }
   },
   methods: {
+    ...mapActions(['createReport']),
     submitHandler() {
-
-      if (this.v$.$invalid || this.date[0] || this.date[1]) {
+      if (this.v$.$invalid) {
         this.v$.$touch()
         return
       }
@@ -84,10 +85,11 @@ export default {
       const formData = {
         title: this.title,
         template: this.template,
-        date: this.date
+        date: this.date,
+        orgname: this.orgname,
       }
-
       console.log(formData)
+      this.createReport(formData)
     }
   },
   // mounted() {

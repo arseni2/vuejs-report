@@ -27,7 +27,7 @@
 </Dialog>
     </div>
 <!--    end header-->
-<!--{{ allPosts }}-->
+{{  }}
     <div class="mt-4">
 
       <div class="relative overflow-x-auto">
@@ -46,15 +46,17 @@
             </tr>
           </thead>
           <tbody class="divide-y-[1px] divide-gray">
-            <tr class="bg-white">
+            <tr v-if="allReports" v-for="item in allReports" class="bg-white">
               <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
-                Apple MacBook Pro 17"
+                {{ item.title }}
               </th>
               <td class="px-6 py-4">
-                Silver
+                {{ item.date[0] }}
+                -
+                {{ item.date[1] }}
               </td>
               <td class="px-6 py-4">
-                Laptop
+                {{ item.template }}
               </td>
               <td>
                 <svg class="w-6 h-6 cursor-pointer stroke-primary hover:stroke-error transition-all" xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 20 20" fill="none">
@@ -64,6 +66,12 @@
                   <path d="M8.1333 11.6667V14.625" stroke-width="1.5" stroke-linecap="round"/>
                   <path d="M11.9668 11.6667V14.625" stroke-width="1.5" stroke-linecap="round"/>
                   <path d="M2.9165 8.33331L4.0915 15.5333C4.35817 17.15 4.99984 18.3333 7.38317 18.3333H12.4082C14.9998 18.3333 15.3832 17.2 15.6832 15.6333L17.0832 8.33331" stroke-width="1.5" stroke-linecap="round"/>
+                </svg>
+              </td>
+
+              <td>
+                <svg class="w-6 h-6 cursor-pointer stroke-primary" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 20 19">
+                  <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 15h.01M4 12H2a1 1 0 0 0-1 1v4a1 1 0 0 0 1 1h16a1 1 0 0 0 1-1v-4a1 1 0 0 0-1-1h-3M9.5 1v10.93m4-3.93-4 4-4-4"/>
                 </svg>
               </td>
             </tr>
@@ -83,7 +91,7 @@ import ButtonFilled from "@/shared_components/ButtonFilled.vue";
 import PageLayout from "@/layouts/PageLayout.vue";
 import CreateReportForm from "@/forms/CreateReportForm.vue";
 import Dialog from "@/shared_components/Dialog.vue";
-import {mapActions, mapGetters} from "vuex";
+import {mapActions, mapGetters, mapMutations} from "vuex";
 
 export default {
   name: "Report",
@@ -93,7 +101,7 @@ export default {
       isOpenDialog: false
     }
   },
-  computed: mapGetters(["allPosts"]),
+  computed: mapGetters(["allReports"]),
   methods: {
     ...mapActions(["fetchReports"]),
     handleOpen() {

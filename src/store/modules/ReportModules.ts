@@ -25,14 +25,32 @@ let mockData = [
 export default {
     actions: {
         async fetchReports({ commit, getters, dispatch }) {
-            // const res = await fetch(
-            //     'https://jsonplaceholder.typicode.com/posts?_limit=' + limit
-            // )
-            // const posts = await res.json()
+            try {
+                const res = await fetch(
+                    'URL EPTA'
+                )
+                const reports = await res.json()
+                commit('getAllReports', reports)
+            } catch (e) {
+                console.log(e)
+            }
+            //dispatch('sayHello')
 
-            dispatch('sayHello')
-
-            commit('getAllReports', mockData)
+            commit('getAllReports', [])
+        },
+        async createReport({ commit, getters, dispatch }, data) {
+            try {
+                const res = await fetch(
+                    'URL EPTA', {method: "POST", body: data}
+                )
+                const reports = await res.json()
+                commit('getAllReports', reports)
+            } catch (e) {
+                console.log(e)
+            }
+            //dispatch('sayHello')
+            console.log(data)
+            commit('createReportMut', data)
         },
         sayHello() {console.log('sayHello working')}
     },
@@ -40,7 +58,7 @@ export default {
         getAllReports(state, reports) {
             state.reports = reports
         },
-        createReport(state, newReports) {
+        createReportMut(state, newReports) {
             state.reports.unshift(newReports)
         }
     },
@@ -48,11 +66,8 @@ export default {
         reports: []
     },
     getters: {
-        allPosts(state) {
+        allReports(state) {
             return state.reports
-        },
-        // postsCount(state, getters) {
-        //     return getters.validPosts.length
-        // }
+        }
     }
 }

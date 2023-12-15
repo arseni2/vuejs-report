@@ -58,6 +58,7 @@ import Select from "@/shared_components/Select.vue";
 import {required} from '@vuelidate/validators'
 import useVuelidate from "@vuelidate/core";
 import ErrorText from "@/shared_components/ErrorText.vue";
+import {mapActions} from "vuex";
 
 export default {
   name: "CreateTemplateSchedulerForm",
@@ -68,11 +69,12 @@ export default {
   data() {
     return {
       title: "",
-      options: ['Option 1', 'Option 2', 'Option 3', 'Option 4'],
+      options: ['org_name', 'src_ip', 'src_port', 'dst_ip', 'dst_port', 'packets_count', 'bytes_count', 'timestamp_column'],
       selectedItems: []
     }
   },
   methods: {
+    ...mapActions(["createTemplateFetch"]),
     handleClickClearAll() {
       this.selectedItems = []
     },
@@ -97,8 +99,7 @@ export default {
         title: this.title,
         selectedItems: this.selectedItems
       }
-
-      console.log(formData)
+      this.createTemplateFetch(formData)
     }
   },
   validations() {
