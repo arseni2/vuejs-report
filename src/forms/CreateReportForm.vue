@@ -1,18 +1,32 @@
 <template>
   <form class="max-w-sm mx-auto">
+
     <div class="mb-5">
       <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Введите название
         отчёта</label>
-      <Input type="email" v-model="title" id="email" placeholder="Сетевой отчёт" required/>
-      <div v-if="v$.title.$error">Name field has an error.</div>
+      <Input type="email" v-model="title" id="email" placeholder="Сетевой отчёт" required :class="{'border-error': v$.title.$error}"/>
+      <ErrorText v-if="v$.title.$error">Name field has an error.</ErrorText>
     </div>
+
     <div class="mb-5">
-      <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Выберите шаблон</label>
+      <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Введите название организации</label>
+      <Input type="email" v-model="orgname" id="email" placeholder="ОАО" required :class="{'border-error': v$.orgname.$error}"/>
+      <ErrorText v-if="v$.orgname.$error">Name field has an error.</ErrorText>
+    </div>
+
+    <div class="mb-5">
+      <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Выберите период</label>
+      <VueDatePicker v-model="date" range :class="{'border-error': v$.date.$error}" />
+      <ErrorText v-if="v$.date.$error">Name field has an error.</ErrorText>
+    </div>
+
+    <div class="mb-5">
+      <label for="password" class="block mb-2 text-sm font-medium text-gray-900">Выберите шаблон</label>
       <Select id="countries" v-model="template">
         <option selected>Обычный шаблон</option>
         <option value="US">Сетевой шаблон</option>
       </Select>
-      <div v-if="v$.template.$error">Name field has an error.</div>
+      <ErrorText v-if="v$.template.$error">Name field has an error.</ErrorText>
     </div>
 
     <div class="flex justify-between mt-8">
@@ -31,40 +45,55 @@ import useVuelidate from "@vuelidate/core";
 import { required  } from '@vuelidate/validators'
 import Input from "@/shared_components/Input.vue";
 import Select from "@/shared_components/Select.vue";
+import VueDatePicker from '@vuepic/vue-datepicker';
+import ErrorText from "@/shared_components/ErrorText.vue";
 
 export default {
   setup() {
     return {v$: useVuelidate()}
   },
   name: "CreateReportForm",
-  components: {ButtonOutlined, ButtonFilled, Input, Select},
+  components: {ButtonOutlined, ButtonFilled, Input, Select, VueDatePicker, ErrorText},
   data() {
     return {
       title: "",
-      template: "Обычный шаблон"
+      template: "Обычный шаблон",
+      date: [],
+      orgname: ""
     }
   },
   validations () {
     return {
       title: {required},
       template: {required},
+      orgname: {required},
+      date: {required},
     }
   },
   methods: {
     submitHandler() {
-      console.log('condition')
-      if (this.v$.$invalid) {
+
+      if (this.v$.$invalid || this.date[0] || this.date[1]) {
         this.v$.$touch()
         return
       }
-      console.log('end condition')
+
+      this.date[0] = this.date[0].toISOString().split('T')[0]
+      this.date[1] = this.date[1].toISOString().split('T')[1]
+
       const formData = {
         title: this.title,
-        template: this.template
+        template: this.template,
+        date: this.date
       }
 
       console.log(formData)
     }
-  }
+  },
+  // mounted() {
+  //   const startDate = new Date();
+  //   const endDate = new Date(new Date().setDate(startDate.getDate() + 7));
+  //   this.date.value = [startDate, endDate];
+  // }
 }
 </script>

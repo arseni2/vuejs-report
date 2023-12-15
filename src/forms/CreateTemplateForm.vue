@@ -2,16 +2,19 @@
   <form class="max-w-sm mx-auto">
     <div class="mb-5">
       <label for="email" class="block mb-2 text-sm font-medium text-gray-900">Введите название шаблона отчёта</label>
-      <Input type="email" v-model="title" id="email" placeholder="Название задачи" required/>
-      <div v-if="v$.title.$error">Name field has an error.</div>
+      <Input :class="{'border-error': v$.title.$error}" type="email" v-model="title" id="email" placeholder="Название задачи" required/>
+      <ErrorText v-if="v$.title.$error">Name field has an error.</ErrorText>
     </div>
     <div class="mb-5">
       <div class="flex gap-2">
-        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">
+        <label for="password" class="block mb-2 text-sm font-medium text-gray-900 ">
           Выберите поля
         </label>
-        <ButtonOutlined @click="handleClickSelectAllFields" class="h-[12px] flex justify-center items-center text-xs px-3">
-          все поля
+        <ButtonOutlined @click="handleClickSelectAllFields" class="h-[12px] flex justify-center items-center text-xs px-1 w-[84px]">
+          выбрать все
+        </ButtonOutlined>
+        <ButtonOutlined @click="handleClickClearAll" class="h-[12px] flex justify-center items-center text-xs px-1 w-[70px]">
+          очистить
         </ButtonOutlined>
       </div>
       <!--      <Select id="countries" multiple :value="fields" @input="$emit('update:title', $event.target.value)">-->
@@ -54,10 +57,11 @@ import Input from "@/shared_components/Input.vue";
 import Select from "@/shared_components/Select.vue";
 import {required} from '@vuelidate/validators'
 import useVuelidate from "@vuelidate/core";
+import ErrorText from "@/shared_components/ErrorText.vue";
 
 export default {
   name: "CreateTemplateSchedulerForm",
-  components: {ButtonOutlined, ButtonFilled, Input, Select},
+  components: {ErrorText, ButtonOutlined, ButtonFilled, Input, Select},
   setup() {
     return {v$: useVuelidate()}
   },
@@ -69,6 +73,9 @@ export default {
     }
   },
   methods: {
+    handleClickClearAll() {
+      this.selectedItems = []
+    },
     handleSelectionChange(event) {
       const selectedOptions = Array.from(event.target.selectedOptions, option => option.value);
       this.selectedItems = selectedOptions;

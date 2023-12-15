@@ -8,11 +8,11 @@ import History from '@/pages/History.vue'
 import Scheduler from '@/pages/Scheduler.vue'
 import App from '@/App.vue'
 import {store} from "@/store/store";
+import VueDatePicker from '@vuepic/vue-datepicker';
+import '@vuepic/vue-datepicker/dist/main.css'
 
 const app = createApp(App)
- /*
- форма для scheduler,
-  */
+
 const routes = [
     { path: '/', component: Reports },
     { path: '/history', component: History },
@@ -29,6 +29,7 @@ const router = VueRouter.createRouter({
 //app.use(Vuelidate)
 //@ts-ignore
 app
+    .component('VueDatePicker', VueDatePicker)
     .use(store)
     .use(router)
     .mount('#app')

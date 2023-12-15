@@ -46,7 +46,7 @@
         </thead>
         <tbody class="divide-y-[1px] divide-gray">
         <tr class="bg-white">
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
             Apple MacBook Pro 17"
           </th>
           <td class="px-6 py-4">
@@ -60,7 +60,7 @@
           </td>
         </tr>
         <tr class="bg-white">
-          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+          <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap ">
             Apple MacBook Pro 17"
           </th>
           <td class="px-6 py-4">
